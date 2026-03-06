@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Enter Ashwood | Dark Fantasy by Dale</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Enter Ashwood, a dark-fantasy world of ancient magic, haunted forests, and dangerous pacts." />
+  <style>
+    :root {
+      --bg: #050509;
+      --bg-alt: #0b0b12;
+      --card: #11111a;
+      --accent: #8b5bff;
+      --accent-soft: rgba(139, 91, 255, 0.2);
+      --text: #f5f5ff;
+      --muted: #a0a0c0;
+      --danger: #ff4b81;
+      --border: #26263a;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-pill: 999px;
+      --transition-fast: 0.18s ease-out;
+      --max-width: 980px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #151528 0, #050509 55%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to bottom, rgba(5, 5, 9, 0.96), rgba(5, 5, 9, 0.7));
+      border-bottom: 1px solid rgba(139, 91, 255, 0.25);
+    }
+
+    .nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #f5f5ff 0, #8b5bff 35%, #050509 70%);
+      box-shadow: 0 0 18px rgba(139, 91, 255, 0.7);
+    }
+
+    .nav-title {
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 0.15rem;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--danger));
+      transition: width var(--transition-fast);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pill {
+      border-radius: var(--radius-pill);
+      padding: 0.4rem 0.9rem;
+      font-size: 0.8rem;
+      border: 1px solid rgba(139, 91, 255, 0.6);
+      background: radial-gradient(circle at top left, rgba(139, 91, 255, 0.25), rgba(5, 5, 9, 0.9));
+      color: var(--text);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      box-shadow: 0 0 12px rgba(139, 91, 255, 0.4);
+    }
+
+    .pill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 20px rgba(139, 91, 255, 0.7);
+      border-color: var(--accent);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 2.5rem;
+      align-items: center;
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      background: rgba(17, 17, 26, 0.9);
+      border-radius: var(--radius-pill);
+      padding: 0.35rem 0.8rem;
+      border: 1px solid rgba(139, 91, 255, 0.4);
+      box-shadow: 0 0 16px rgba(139, 91, 255, 0.35);
+    }
+
+    .hero-tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent), var(--danger));
+      box-shadow: 0 0 10px rgba(139, 91, 255, 0.9);
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      margin-top: 1rem;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero-subtitle {
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    .hero-subtitle span {
+      color: var(--accent);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      padding: 0.7rem 1.4rem;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--danger));
+      color: #050509;
+      box-shadow: var(--shadow-soft);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 45px rgba(0, 0, 0, 0.8);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(139, 91, 255, 0.6);
+      color: var(--text);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(139, 91, 255, 0.12);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 1.75rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .hero-meta-label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      color: #6f6f9a;
+    }
+
+    .hero-meta-value {
+      color: var(--text);
+    }
+
+    .hero-art {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top, #1b1b2b 0, #050509 55%);
+      border-radius: 26px;
+      padding: 1.4rem;
+      border: 1px solid rgba(139, 91, 255, 0.4);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-inner {
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      padding: 1.1rem;
+      background: radial-gradient(circle at 20% 0, rgba(139, 91, 255, 0.35), rgba(5, 5, 9, 0.95));
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .hero-badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #f5f5ff;
+      background: rgba(5, 5, 9, 0.7);
+      padding: 0.35rem 0.8rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-orb {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #f5f5ff 0, #8b5bff 35%, #050509 70%);
+      box-shadow: 0 0 40px rgba(139, 91, 255, 0.9);
+    }
+
+    .hero-card-title {
+      font-size: 1.1rem;
+      margin-top: 0.75rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-card-text {
+      font-size: 0.85rem;
+      color: #e0defa;
+    }
+
+    .hero-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-card-stars {
+      color: #ffd66b;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+    }
+
+    .hero-glow {
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at 10% 0, rgba(139, 91, 255, 0.4), transparent 55%),
+                  radial-gradient(circle at 90% 100%, rgba(255, 75, 129, 0.35), transparent 55%);
+      opacity: 0.7;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .section-heading {
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 32rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+      margin-top: 1.75rem;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      background: radial-gradient(circle at top, #151525 0, #050509 70%);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 1.25rem 1.3rem;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.9rem;
+    }
+
+    .pill-tag {
+      font-size: 0.75rem;
+      border-radius: var(--radius-pill);
+      padding: 0.25rem 0.7rem;
+      border: 1px solid rgba(139, 91, 255, 0.4);
+      color: var(--muted);
+      background: rgba(11, 11, 18, 0.9);
+    }
+
+    .reviews {
+      margin-top: 1.75rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .review {
+      background: radial-gradient(circle at top, rgba(139, 91, 255, 0.18), #050509 70%);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(139, 91, 255, 0.35);
+      padding: 0.9rem 1rem;
+      font-size: 0.85rem;
+      color: #e3e1ff;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.7);
+    }
+
+    .review-source {
+      margin-top: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .review-stars {
+      color: #ffd66b;
+      font-size: 0.8rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .newsletter {
+      margin-top: 1.75rem;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .newsletter-box {
+      background: radial-gradient(circle at top, rgba(139, 91, 255, 0.22), #050509 70%);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(139, 91, 255, 0.4);
+      padding: 1.3rem 1.4rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .newsletter-title {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .newsletter-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.4rem;
+    }
+
+    .newsletter-input {
+      flex: 1 1 180px;
+      min-width: 0;
+      padding: 0.6rem 0.75rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(5, 5, 9, 0.9);
+      color: var(--text);
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .newsletter-input::placeholder {
+      color: #6f6f9a;
+    }
+
+    .newsletter-note {
+      font-size: 0.75rem;
+      color: #6f6f9a;
+      margin-top: 0.5rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 1.75rem;
+      margin-top: 1.75rem;
+    }
+
+    .about-text {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .about-highlight {
+      margin-top: 0.9rem;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(139, 91, 255, 0.4);
+      background: radial-gradient(circle at top, rgba(139, 91, 255, 0.18), #050509 70%);
+      font-size: 0.85rem;
+      color: #e3e1ff;
+    }
+
+    .about-meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+    }
+
+    .contact-card {
+      background: radial-gradient(circle at top, #151525 0, #050509 70%);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 1.2rem 1.3rem;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .contact-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #6f6f9a;
+      margin-bottom: 0.25rem;
+    }
+
+    footer {
+      border-top: 1px solid rgba(38, 38, 58, 0.9);
+      background: #050509;
+      padding: 1.4rem 1.25rem 1.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 840px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-art {
+        order: -1;
+      }
+
+      .newsletter {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .about-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .section {
+        padding: 2rem 1rem;
+      }
+
+      .hero-card-inner {
+        min-height: 220px;
+      }
+
+      .hero-meta {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <nav class="nav">
+        <div class="nav-left">
+          <div class="nav-logo"></div>
+          <div class="nav-title">Enter Ashwood</div>
+        </div>
+        <div class="nav-links">
+          <a href="#book">Book</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-cta">
+          <a href="#newsletter" class="pill">
+            <span>Join Reader Circle</span>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="section hero" id="top">
+        <div>
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            <span>Dark Fantasy Series · Ashwood</span>
+          </div>
+          <h1 class="hero-title">Ashwood: The Blood Pact</h1>
+          <p class="hero-subtitle">
+            Enter a <span>dark, atmospheric world</span> of haunted forests, ancient magic, and a pact that should never have been made.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#" class="btn btn-primary">
+              <span>Read on Amazon</span>
+              <span>↗</span>
+            </a>
+            <a href="#newsletter" class="btn btn-ghost">
+              <span>Join the Ashwood Reader Circle</span>
+            </a>
+          </div>
+
+          <div class="hero-meta">
+            <div class="hero-meta-item">
+              <div class="hero-meta-label">Genre</div>
+              <div class="hero-meta-value">Dark Fantasy · Atmospheric · Character-Driven</div>
+            </div>
+            <div class="hero-meta-item">
+              <div class="hero-meta-label">Tone</div>
+              <div class="hero-meta-value">Cinematic · Haunting · Immersive</div>
+            </div>
+            <div class="hero-meta-item">
+              <div class="hero-meta-label">Perfect for readers of</div>
+              <div class="hero-meta-value">Shadowy forests, dangerous magic, and slow-burning tension.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-art">
+          <div class="hero-card">
+            <div class="hero-glow"></div>
+            <div class="hero-card-inner">
+              <div class="hero-card-top">
+                <div>
+                  <div class="hero-badge">Ashwood · Book One</div>
+                  <h2 class="hero-card-title">A Pact Written in Blood</h2>
+                  <p class="hero-card-text">
+                    In the heart of the Ashwood, power always has a price. When an old magic is awakened, the forest remembers every promise ever broken.
+                  </p>
+                </div>
+                <div class="hero-orb"></div>
+              </div>
+              <div class="hero-card-footer">
+                <div>
+                  <div class="hero-card-stars">★★★★★</div>
+                  <div>“Dark, immersive, and insanely atmospheric.”</div>
+                </div>
+                <div>
+                  <div class="hero-meta-label">Status</div>
+                  <div class="hero-meta-value">Book One · Series in Progress</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOOK SECTION -->
+      <section class="section" id="book">
+        <h2 class="section-heading">The World of Ashwood</h2>
+        <p class="section-subtitle">
+          A cinematic dark-fantasy experience set in a living forest of secrets, rituals, and power that never lets go.
+        </p>
+
+        <div class="grid grid-2" style="margin-top: 1.75rem;">
+          <div class="card">
+            <h3 class="card-title">Book One · The Blood Pact</h3>
+            <p class="card-text">
+              A forbidden pact ties fate to the Ashwood itself. As old magic stirs, the forest begins to collect on every debt ever owed. 
+              Those who enter soon learn: the Ashwood does not forget—and it never gives back what it takes willingly.
+            </p>
+            <div class="pill-row">
+              <span class="pill-tag">Haunted Forests</span>
+              <span class="pill-tag">Ancient Magic</span>
+              <span class="pill-tag">Slow-Burn Tension</span>
+              <span class="pill-tag">Morally Gray Choices</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">What to Expect</h3>
+            <p class="card-text">
+              If you crave atmosphere, creeping dread, and characters who feel painfully human, Ashwood is built for you. 
+              This is not a lighthearted romp—it’s a descent into a world where every shadow might be listening.
+            </p>
+            <div class="pill-row">
+              <span class="pill-tag">Cinematic Prose</span>
+              <span class="pill-tag">Character-Driven</span>
+              <span class="pill-tag">Dark, Not Grimdark</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- REVIEWS -->
+      <section class="section" id="reviews">
+        <h2 class="section-heading">What Readers Are Saying</h2>
+        <p class="section-subtitle">
+          Early readers describe Ashwood as immersive, visual, and hard to shake once you’ve stepped under its branches.
+        </p>
+
+        <div class="reviews">
+          <div class="review">
+            <div class="review-stars">★★★★★</div>
+            “Dark, immersive, and insanely atmospheric.”
+            <div class="review-source">— Megan R., Amazon</div>
+          </div>
+          <div class="review">
+            <div class="review-stars">★★★★★</div>
+            “Didn’t expect to love this as much as I did. The world feels so real.”
+            <div class="review-source">— Caleb H., Goodreads</div>
+          </div>
+          <div class="review">
+            <div class="review-stars">★★★★★</div>
+            “Fast read with killer visuals. Felt like watching a movie in my head.”
+            <div class="review-source">— Jenna Morales, BookBub</div>
+          </div>
+          <div class="review">
+            <div class="review-stars">★★★★★</div>
+            “The forest scenes gave me chills. This author knows how to build tension.”
+            <div class="review-source">— Ryan D., Amazon</div>
+          </div>
+          <div class="review">
+            <div class="review-stars">★★★★★</div>
+            “I’m picky with fantasy, but this one delivered. Dark, sharp, and addictive.”
+            <div class="review-source">— Tara K., Goodreads</div>
+          </div>
+          <div class="review">
+            <div class="review-stars">★★★★★</div>
+            “If this is book one, I’m all in for the series. Incredible start.”
+            <div class="review-source">— Derek M., Amazon</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEWSLETTER -->
+      <section class="section" id="newsletter">
+        <h2 class="section-heading">Join the Ashwood Reader Circle</h2>
+        <p class="section-subtitle">
+          Get early access to new chapters, lore drops, behind-the-scenes notes, and occasional ARC opportunities for future Ashwood books.
+        </p>
+
+        <div class="newsletter">
+          <div class="newsletter-box">
+            <div class="newsletter-title">Step under the branches.</div>
+            <div class="newsletter-text">
+              The Reader Circle is where the deeper parts of Ashwood live—ritual fragments, maps, character notes, and things too strange for the main pages.
+            </div>
+            <form class="newsletter-form" onsubmit="return false;">
+              <!-- Replace this with your real email service embed (MailerLite, etc.) -->
+              <input
+                type="email"
+                class="newsletter-input"
+                placeholder="Enter your email to join the circle"
+                required
+              />
+              <button class="btn btn-primary" type="submit">
+                <span>Join the Circle</span>
+              </button>
+            </form>
+            <div class="newsletter-note">
+              No spam. Just dark forests, strange magic, and the occasional whisper from Ashwood.
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <h3 class="card-title">ARC & Early Access</h3>
+              <p class="card-text">
+                Want to read future Ashwood books early in exchange for an honest review when they launch? 
+                The Reader Circle is where those invitations go first.
+              </p>
+              <p class="card-text" style="margin-top: 0.7rem;">
+                Watch your inbox for “Ashwood ARC” in the subject line.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="section" id="about">
+        <h2 class="section-heading">About the Author</h2>
+        <p class="section-subtitle">
+          Dale writes dark fantasy that feels cinematic, immersive, and just a little too real once you put the book down.
+        </p>
+
+        <div class="about-grid">
+          <div>
+            <p class="about-text">
+              Dale is a dark-fantasy storyteller obsessed with atmosphere—haunted forests, old magic, and the quiet moments where characters decide who they really are.
+              His stories blend visual, almost film-like scenes with emotional weight, building worlds that feel lived-in and dangerous.
+            </p>
+            <p class="about-text" style="margin-top: 0.8rem;">
+              When he’s not writing, he’s experimenting with creative tools, designing visuals, and shaping the Ashwood universe into something readers can step into, not just read about.
+            </p>
+            <div class="about-highlight">
+              “Fantasy should feel like a place you could walk into—beautiful, unsettling, and impossible to forget once you leave.”
+            </div>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-label">Contact</div>
+            <p>
+              For reader messages, ARC interest, or collaboration inquiries:
+            </p>
+            <p style="margin-top: 0.4rem;">
+              <a href="mailto:yourauthor@proton.me">yourauthor@proton.me</a>
+            </p>
+
+            <div class="about-meta">
+              Social links can go here when you’re ready—Instagram, TikTok, or wherever you share glimpses of Ashwood.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="section" id="contact">
+        <h2 class="section-heading">Step Into Ashwood</h2>
+        <p class="section-subtitle">
+          Whether you’re a reader, reviewer, or fellow creator, you’re welcome under these branches.
+        </p>
+
+        <div class="grid grid-2" style="margin-top: 1.75rem;">
+          <div class="card">
+            <h3 class="card-title">For Readers</h3>
+            <p class="card-text">
+              Have thoughts about the book, theories about the forest, or a favorite character you can’t shake?
+              Reach out anytime or reply to any Reader Circle email—Ashwood grows with the people who wander into it.
+            </p>
+          </div>
+          <div class="card">
+            <h3 class="card-title">For Reviewers & Creators</h3>
+            <p class="card-text">
+              Interested in ARCs, features, or collaborations? Send a short note with who you are and where you share your work.
+            </p>
+            <p class="card-text" style="margin-top: 0.6rem;">
+              Email: <a href="mailto:yourauthor@proton.me">yourauthor@proton.me</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div>© <span id="year"></span> Enter Ashwood · Dale · All rights reserved.</div>
+        <div class="footer-links">
+          <a href="#top">Back to top</a>
+          <a href="#book">Book</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Set current year in footer
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
